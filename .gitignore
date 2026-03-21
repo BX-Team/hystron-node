@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.db*
+*.egg-info/
+dist/
+build/
+
+# Generated protobuf stubs (built by scripts/gen_proto.py or Dockerfile)
+app/gen/
+
+# Runtime
+*.log
+.env

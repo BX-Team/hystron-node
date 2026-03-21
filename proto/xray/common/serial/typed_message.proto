@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package xray.common.serial;
+
+option go_package = "github.com/xtls/xray-core/common/serial";
+option java_package = "com.xray.common.serial";
+option java_multiple_files = true;
+
+// TypedMessage is a wrapper for any typed protobuf message.
+message TypedMessage {
+    // The name of the message type, retrieved from protobuf API.
+    string type = 1;
+    // Serialized proto of the specified type.
+    bytes value = 2;
+}

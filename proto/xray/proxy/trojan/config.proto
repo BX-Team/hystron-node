@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package xray.proxy.trojan;
+
+option go_package = "github.com/xtls/xray-core/proxy/trojan";
+
+message Account {
+    string password = 1;
+    // Optional flow for Trojan (e.g. "xtls-rprx-vision")
+    string flow = 2;
+}

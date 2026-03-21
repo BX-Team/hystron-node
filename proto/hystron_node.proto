@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package hystron_node;
+
+option go_package = "github.com/BX-Team/hystron-node/proto";
+
+// ─── Service exposed to the Hystron panel ────────────────────────────────────
+
+service HystronNode {
+    // Health / status of the node and xray process
+    rpc GetStatus(StatusRequest) returns (StatusResponse);
+
+    // Traffic statistics from xray StatsService
+    rpc GetTrafficStats(TrafficRequest) returns (TrafficResponse);
+
+    // Reset traffic counters in xray (call after panel has stored the delta)
+    rpc ResetTrafficStats(ResetRequest) returns (ResetResponse);
+
+    // User management — proxied to xray HandlerService
+    rpc AddUser(UserRequest) returns (UserResponse);
+    rpc RemoveUser(RemoveUserRequest) returns (UserResponse);
+
+    // UpdateUser = RemoveUser + AddUser on the node side
+    rpc UpdateUser(UserRequest) returns (UserResponse);
+}
+
+// ─── Status ──────────────────────────────────────────────────────────────────
+
+message StatusRequest {}
+
+message StatusResponse {
+    bool xray_running = 1;
+    string xray_version = 2;
+    string node_version = 3;
+    int64 uptime_seconds = 4;
+}
+
+// ─── Traffic ─────────────────────────────────────────────────────────────────
+
+message TrafficRequest {
+    // If empty, return stats for all users
+    repeated string usernames = 1;
+}
+
+message UserTrafficStat {
+    string username = 1;
+    int64 tx = 2;  // uplink bytes
+    int64 rx = 3;  // downlink bytes
+}
+
+message TrafficResponse {
+    repeated UserTrafficStat stats = 1;
+    int64 collected_at = 2;  // Unix timestamp (UTC)
+}
+
+message ResetRequest {
+    // If empty, reset all users
+    repeated string usernames = 1;
+}
+
+message ResetResponse {
+    bool success = 1;
+}
+
+// ─── User management ─────────────────────────────────────────────────────────
+
+enum Protocol {
+    VLESS = 0;
+    TROJAN = 1;
+}
+
+message UserRequest {
+    string username = 1;
+    // UUID — used by VLESS
+    string uuid = 2;
+    // Password — used by Trojan
+    string password = 3;
+    Protocol protocol = 4;
+    // Xray inbound tags to add/update the user in
+    // e.g. ["vless-reality-in", "vless-ws-in"]
+    repeated string inbound_tags = 5;
+    // Optional VLESS flow (e.g. "xtls-rprx-vision")
+    string flow = 6;
+}
+
+message RemoveUserRequest {
+    string username = 1;
+    repeated string inbound_tags = 2;
+}
+
+message UserResponse {
+    bool success = 1;
+    string message = 2;
+}

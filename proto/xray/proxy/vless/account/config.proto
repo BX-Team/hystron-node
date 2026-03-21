@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package xray.proxy.vless.account;
+
+option go_package = "github.com/xtls/xray-core/proxy/vless/account";
+
+message Account {
+    // UUID of the user
+    string id = 1;
+    // VLESS flow — e.g. "xtls-rprx-vision" (empty for regular VLESS)
+    string flow = 2;
+    // Encryption — must be "none" for VLESS
+    string encryption = 3;
+}

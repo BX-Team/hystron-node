@@ -1,0 +1,11 @@
+services:
+  hystron-node:
+    image: ghcr.io/bx-team/hystron-node:latest
+    ports:
+      - "50051:50051"
+    volumes:
+      - /var/lib/hystron-node:/var/lib/hystron-node
+    env_file:
+      - .env
+    restart: unless-stopped
+    network_mode: host 

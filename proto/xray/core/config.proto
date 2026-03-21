@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package xray.core;
+
+option go_package = "github.com/xtls/xray-core/core";
+
+// Minimal stub — only InboundHandlerConfig and OutboundHandlerConfig are needed
+// as type references in HandlerService. We don't use AddInbound/AddOutbound.
+
+message InboundHandlerConfig {
+    string tag = 1;
+    bytes receiver_settings = 2;
+    bytes proxy_settings = 3;
+}
+
+message OutboundHandlerConfig {
+    string tag = 1;
+    bytes sender_settings = 2;
+    bytes proxy_settings = 3;
+    int64 expire = 4;
+    string comment = 5;
+}

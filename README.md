@@ -2,7 +2,7 @@
 
 Hystron Node is a lightweight daemon that runs alongside **xray-core** on a proxy server and connects it to the [Hystron](https://github.com/BX-Team/hystron) management panel. It exposes a gRPC server that the panel uses to collect traffic statistics and manage users — no panel restarts or manual SSH required.
 
-Supported protocols: **VLESS**, **Trojan**, **Hysteria2** (via xray-core).
+Supported protocols: **VLESS** and **Trojan**.
 
 ## How It Works
 

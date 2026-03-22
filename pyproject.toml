@@ -1,6 +1,6 @@
 [project]
 name = "hystron-node"
-version = "0.1.0"
+version = "1.0.0"
 description = "Xray-core node agent for the Hystron panel"
 requires-python = ">=3.12"
 dependencies = [

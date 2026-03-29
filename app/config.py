@@ -2,7 +2,7 @@ import os
 import sys
 from dataclasses import dataclass
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 @dataclass(frozen=True)
